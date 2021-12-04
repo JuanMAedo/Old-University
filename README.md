@@ -21,3 +21,11 @@ The code have a lot of mistakes and inefficient estructures.<br />
 >· Inheritance, interfaces, polymorphism<br />
 >· Exceptions<br />
 >· Use of Data Structures and Files<br />
+
+## Computer Structure and Organization ##
+**Studied in MIPS32 over Mars's tool 
+>· Learn all over IEEE754 standar<br />
+>· Using of Processor registers<br />
+>· Using of subrutines <br />
+>· Optimization<br />
+>· Segmentation<br />
