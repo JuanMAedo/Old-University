@@ -18,10 +18,10 @@ BEGIN {mostrarMenu}
    writeln;
    writeln ('******************* MENU *********************');
    writeln('a.- Multiplos sinceros ');
-   writeln('b.- Números amigos');
-   writeln('c.- Números colegas');
-   writeln('d.- Número totalpar');
-   writeln('e.- Mostrar triángulo');
+   writeln('b.- NÃºmeros amigos');
+   writeln('c.- NÃºmeros colegas');
+   writeln('d.- NÃºmero totalpar');
+   writeln('e.- Mostrar triÃ¡ngulo');
    writeln('f.- Terminar');
 END; {mostrarMenu}
 
@@ -30,19 +30,19 @@ VAR
    n :integer;
 BEGIN {leerNumeroSuperiorA}
    REPEAT
-       writeln ('Introduzca un número mayor que ', inf);
+       writeln ('Introduzca un nÃºmero mayor que ', inf);
        readln (n);
    UNTIL (n > inf);
    leerNumeroSuperiorA := n;
 END; {leerNumeroSuperiorA}
 
 FUNCTION pedirNum1Cifra:integer;
-{Solicita al usuario un número de una cifra}
+{Solicita al usuario un nÃºmero de una cifra}
 VAR
    digito:integer;
 BEGIN {pedirNum1Cifra}
    REPEAT
-      writeln('Introduzca el número de una cifra:');
+      writeln('Introduzca el nÃºmero de una cifra:');
       readln(digito);
    UNTIL (digito<10) AND (digito>0); {Una cifra y positivo}
    pedirNum1Cifra := digito;
@@ -50,19 +50,19 @@ END; {pedirNum1Cifra}
 
 
 FUNCTION pedirNumPositivo:integer;
-{Solicita al usuario un número positivo}
+{Solicita al usuario un nÃºmero positivo}
 VAR
    num:integer;
 BEGIN {pedirNumPositivo}
    REPEAT
-      writeln('Introduzca un número positivo');
+      writeln('Introduzca un nÃºmero positivo');
       readln(num);
    UNTIL (num>0);
    pedirNumPositivo:= num;
 END;  {pedirNumPositivo}
 
 FUNCTION escribirMultiplosSinceros(base,limite:integer) :integer;
-{Escribe los múltiplos sinceros del número 'base' menores del número 'límite'}
+{Escribe los mÃºltiplos sinceros del nÃºmero 'base' menores del nÃºmero 'lÃ­mite'}
    VAR
       multiplo, i:integer;
 
@@ -83,12 +83,12 @@ FUNCTION escribirMultiplosSinceros(base,limite:integer) :integer;
 
 BEGIN {escribirMultiplosSinceros}
    i :=1 ;
-   multiplo := base; {Primer múltiplo}
+   multiplo := base; {Primer mÃºltiplo}
    WHILE (multiplo <= limite) DO BEGIN
       IF (sumacifras(multiplo) = base) THEN
          write (multiplo, '  ');
       i := i + 1;
-      multiplo := i*base; {Siguiente múltiplo}
+      multiplo := i*base; {Siguiente mÃºltiplo}
    END;
    writeln;
 END; {escribirMultiplosSinceros}
@@ -110,15 +110,15 @@ FUNCTION sonAmigos (n1,n2:integer) :boolean;
  END; {sonAmigos}
 
 FUNCTION esColega (num,cifra :integer) :boolean;
-{Devuelve TRUE si el número num es colega del dígito cifra}
+{Devuelve TRUE si el nÃºmero num es colega del dÃ­gito cifra}
 
    FUNCTION terminaCon (num, cifra:integer):boolean;
-   {Devuelve TRUE si el número num termina por el dígito cifra}
+   {Devuelve TRUE si el nÃºmero num termina por el dÃ­gito cifra}
    BEGIN {terminaCon}
        terminaCon := num MOD 10 = cifra;
    END; {terminaCon}
    FUNCTION empiezaCon (num, cifra:integer):boolean;
-   {Devuelve TRUE si el número num empieza con el dígito cifra}
+   {Devuelve TRUE si el nÃºmero num empieza con el dÃ­gito cifra}
    VAR
       nuevo:integer;
    BEGIN {empiezaCon}
@@ -142,7 +142,7 @@ BEGIN {esTotalPar}
 END; {esTotalPar}
 
 PROCEDURE DibujarTriangulo(base:integer);
-{Dibuja un triangulo con números con la 'base' dada}
+{Dibuja un triangulo con nÃºmeros con la 'base' dada}
 VAR
    i, j: integer;
 BEGIN{dibujarTriangulo}
@@ -160,36 +160,36 @@ BEGIN {Programa principal}
       readln(opcion);
       CASE opcion OF
           'a', 'A': BEGIN
-                       writeln('*********** Múltiplos sinceros *********************');
+                       writeln('*********** MÃºltiplos sinceros *********************');
                        base:=PedirNum1Cifra;
-                       writeln('Introduzca el límite (superior a base):');
+                       writeln('Introduzca el lÃ­mite (superior a base):');
                        limite:=leerNumeroSuperiorA(base);
                        writeln(' Los multiplos sinceros son: ');
                        escribirMultiplosSinceros(base,limite);
 
                    END;
          'b', 'B': BEGIN
-                       writeln('************** Números amigos  *********************');
+                       writeln('************** NÃºmeros amigos  *********************');
                        numero1:=PedirNumPositivo;
                        numero2:=PedirNumPositivo;
                        IF (sonAmigos(numero1,numero2) = TRUE) THEN
-                          writeln('Los números introducidos son amigos')
+                          writeln('Los nÃºmeros introducidos son amigos')
                        ELSE
-                          writeln ('Los números introducidos no son amigos ');
+                          writeln ('Los nÃºmeros introducidos no son amigos ');
                    END;
          'c', 'C': BEGIN
-                       writeln('************** Números colegas  *********************');
+                       writeln('************** NÃºmeros colegas  *********************');
                        numero:=PedirNumPositivo;
                        digito:=PedirNum1Cifra;
-                       write ('El número = ', numero);
+                       write ('El nÃºmero = ', numero);
                        IF  (esColega(numero,digito) = FALSE ) THEN
                           write (' NO' );
                        writeln (' es colega de la cifra d = ',digito);
                    END;
          'd', 'D': BEGIN
-                       writeln('************** Números totalpar  *******************');
+                       writeln('************** NÃºmeros totalpar  *******************');
                        numero:=PedirNumPositivo;
-                       write ('El número = ', numero);
+                       write ('El nÃºmero = ', numero);
                        IF (esTotalPar(numero) = FALSE) THEN
                           write (' NO' );
                        writeln (' es totalpar ');
