@@ -8,8 +8,8 @@ Studied in Pascal
 · Type of data 
 · File Management
 
-# Data Estructure #
-Studied in Pascal
+# Data Structures #
+Studied in Pascal\n
 . Introduction of DTA
 · Implementation of specifications DTA
 · Use and manipualtions with Pointers
@@ -20,4 +20,4 @@ Studied in Java over NetBeans 8.2
 · Class, objects, castings, statics
 · Inheritance, interfaces, polymorphism
 · Exceptions
-· Use of Data Structure and Files
+· Use of Data Structures and Files
