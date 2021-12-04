@@ -9,7 +9,7 @@ Studied in Pascal
 · File Management
 
 # Data Structures #
-Studied in Pascal\n
+Studied in Pascal
 . Introduction of DTA
 · Implementation of specifications DTA
 · Use and manipualtions with Pointers
