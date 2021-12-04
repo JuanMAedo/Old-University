@@ -1,0 +1,36 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 11/05/2021 16:25:52
+
+00000000                             1  ; Zona de datos
+00000400                             2      ORG $400
+00000400                             3  VA  DS.W    1
+00000402= 0008                       4  VB  DC.W    8
+00000404= 0001                       5  VC  DC.W    1
+00000406= 0003                       6  VD  DC.W    3
+00000408                             7  ; Zona de programa
+00001000                             8  START   ORG $1000
+00001000  3038 0402                  9      MOVE.W  VB,D0
+00001004  81FC 0002                 10      DIVS.W  #2,D0
+00001008  3238 0406                 11      MOVE.W  VD,D1
+0000100C  C2FC 0005                 12      MULU.W  #5,D1
+00001010  9078 0404                 13      SUB.W   VC,D0
+00001014  D041                      14      ADD.W   D1,D0
+00001016  31C0 0400                 15      MOVE.W  D0,VA
+0000101A                            16  ; Secuencia de terminaci�n del programa
+0000101A  103C 0009                 17      MOVE.B  #9,D0
+0000101E  4E4F                      18      TRAP    #15
+00001020                            19      END START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000
+VA                  400
+VB                  402
+VC                  404
+VD                  406
