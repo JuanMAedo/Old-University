@@ -1,0 +1,353 @@
+###############################################################
+#
+# MANEJADOR DE EXCEPCIONES: VARIABLES Y DEFINICIONES
+#
+###############################################################		
+		.kdata
+# Zona de salvaguarda de registros
+		.align	2
+sv_at:		.word	0
+sv_a0:		.word	0
+sv_v0:		.word	0
+
+# Mensajes gen�ricos
+M1_MSG:		.asciiz	"  Exception "
+M2_MSG:		.asciiz	" occurred and ignored\n"	
+# C�digos de excepci�n
+		.eqv	INT_CODE,0		# Interrupci�n externa
+		.eqv	MOD_CODE,1		# Modificaci�n de TLB
+		.eqv	TLBL_CODE,2		# Error en TLB o fallo de TLB en carga o lectura de instrucci�n
+		.eqv	TLBS_CODE,3		# Error en TLB o fallo de TLB en almacenamiento
+		.eqv	ADEL_CODE,4		# Error de direcci�n en carga o lectura de instrucci�n
+		.eqv	ADES_CODE,5		# Error de direcci�n en almacenamiento
+		.eqv	IBE_CODE,6		# Error de bus en una referencia a instrucci�n
+		.eqv	DBE_CODE,7		# Error de bus en una referencia a dato
+		.eqv	SYSCALL_CODE,8		# Llamada a sistema (syscall)
+		.eqv	BKPT_CODE,9		# Punto de ruptura (breakpoint): instrucci�n break
+		.eqv	RI_CODE,10		# Instrucci�n reservada
+		.eqv	CpU_CODE,11		# Coprocesador no utilizable
+		.eqv	OV_CODE,12		# Desbordamiento aritm�tico en complemento a 2
+		.eqv	TRAP_CODE,13		# Instrucci�n TRAP
+		.eqv	R14_CODE,14		# Reservado
+		.eqv	DIVZ_CODE,15		# Error de divisi�n por cero
+		.eqv	ID16_CODE,16		# Dependiente de la implementaci�n
+		.eqv	ID17_CODE,17		# Dependiente de la implementaci�n
+		.eqv	C2E_CODE,18		# Excepci�n del coprocesador 2
+		.eqv	R19_CODE,19		# Reservado
+		.eqv	R20_CODE,20		# Reservado
+		.eqv	R21_CODE,21		# Reservado
+		.eqv	MDMX_CODE,22		# Extensi�n multimedia MDMX espec�fica de aplicaci�n
+		.eqv	WATCH_CODE,23		# Watch (en depuraci�n)
+		.eqv	MCHECK_CODE,24		# Inconsistencia en el procesador
+		.eqv	R25_CODE,25		# Reservado
+		.eqv	R26_CODE,26		# Reservado
+		.eqv	R27_CODE,27		# Reservado
+		.eqv	R28_CODE,28		# Reservado
+		.eqv	R29_CODE,29		# Reservado
+		.eqv	CACHE_ERR_CODE,30	# Error en memoria cach�
+		.eqv	R31_CODE,31		# Reservado
+
+# Mensajes asociados a las excepciones
+INT_MSG:	.asciiz	"  [Interrupt] "
+MOD_MSG:	.asciiz	"  [TLB]"
+TLBL_MSG:	.asciiz	"  [TLBL]"
+TLBS_MSG:	.asciiz	"  [TLBS]"
+ADEL_MSG:	.asciiz	"  [Address error in inst/data fetch] "
+ADES_MSG:	.asciiz	"  [Address error in store] "
+IBE_MSG:	.asciiz	"  [Bad instruction address] "
+DBE_MSG:	.asciiz	"  [Bad data address] "
+SYSCALL_MSG:	.asciiz	"  [Error in syscall] "
+BKPT_MSG:	.asciiz	"  [Breakpoint] "
+RI_MSG:		.asciiz	"  [Reserved instruction] "
+CpU_MSG:	.asciiz	""
+OV_MSG:		.asciiz	"  [Arithmetic overflow] "
+TRAP_MSG:	.asciiz	"  [Trap] "
+R14_MSG:	.asciiz	""
+DIVZ_MSG:	.asciiz	"  [Divide by zero] "
+ID16_MSG:	.asciiz	""
+ID17_MSG:	.asciiz	""
+C2E_MSG:	.asciiz	"  [Coproc 2]"
+R19_MSG:	.asciiz	""
+R20_MSG:	.asciiz	""
+R21_MSG:	.asciiz	""
+MDMX_MSG:	.asciiz	"  [MDMX]"
+WATCH_MSG:	.asciiz	"  [Watch]"
+MCHECK_MSG:	.asciiz	"  [Machine check]"
+R25_MSG:	.asciiz	""
+R26_MSG:	.asciiz	""
+R27_MSG:	.asciiz	""
+R28_MSG:	.asciiz	""
+R29_MSG:	.asciiz	""
+CACHE_ERR_MSG:	.asciiz	"  [Cache]"
+R31_MSG:	.asciiz	""
+# Tabla de punteros a los mensajes de excepci�n
+		.align	2
+MSG_TABLE:	.word	INT_MSG, MOD_MSG, TLBL_MSG, TLBS_MSG	 	# Punteros a strings para excepciones 0-3
+		.word	ADEL_MSG, ADES_MSG, IBE_MSG, DBE_MSG 		# Punteros a strings para excepciones 4-7
+		.word	SYSCALL_MSG, BKPT_MSG, RI_MSG, CpU_MSG	 	# Punteros a strings para excepciones 8-11
+		.word	OV_MSG, TRAP_MSG, R14_MSG, DIVZ_MSG 		# Punteros a strings para excepciones 12-15
+		.word	ID16_MSG, ID17_MSG, C2E_MSG, R19_MSG	 	# Punteros a strings para excepciones 16-19
+		.word	R20_MSG, R21_MSG, MDMX_MSG, WATCH_MSG 		# Punteros a strings para excepciones 20-23
+		.word	MCHECK_MSG, R25_MSG, R26_MSG, R27_MSG 		# Punteros a strings para excepciones 24-27
+		.word	R28_MSG, R29_MSG, CACHE_ERR_MSG, R31_MSG 	# Punteros a strings para excepciones 28-31
+# Tabla de vectores de excepci�n
+EXV_TABLE:	.word	INT_RTE, GEN_RTE, GEN_RTE, GEN_RTE 		# Vectores de RTE para excepciones 0-3
+		.word	GEN_RTE, GEN_RTE, GEN_RTE, GEN_RTE 		# Vectores de RTE para excepciones 4-7
+		.word	GEN_RTE, GEN_RTE, GEN_RTE, GEN_RTE 		# Vectores de RTE para excepciones 8-11
+		.word	GEN_RTE, TRAP_RTE, GEN_RTE, GEN_RTE	 	# Vectores de RTE para excepciones 12-15
+		.word	GEN_RTE, GEN_RTE, GEN_RTE, GEN_RTE 		# Vectores de RTE para excepciones 16-19
+		.word	GEN_RTE, GEN_RTE, GEN_RTE, GEN_RTE	 	# Vectores de RTE para excepciones 20-23
+		.word	GEN_RTE, GEN_RTE, GEN_RTE, GEN_RTE 		# Vectores de RTE para excepciones 24-27
+		.word	GEN_RTE, GEN_RTE, GEN_RTE, GEN_RTE 		# Vectores de RTE para excepciones 28-31
+# C�digos de los servicios de trap
+		.eqv	WRITE_D7SEG,1
+		.eqv	SET_COUNTER,2
+		.eqv	SET_HEXKEY,3
+		.eqv	HEXKEY_PRESSED_NO_INT,4
+		.eqv	HEXKEY_READ_NO_INT,5
+		.eqv	HEXKEY_PRESSED_INT,6
+		.eqv	HEXKEY_READ_INT,7
+# Direcciones de E/S de los dispositivos
+		.eqv	RECEIVER_CTRL_ADDR,0xFFFF0000			# Consola: control del teclado
+		.eqv	RECEIVER_DATA_ADDR,0xFFFF0004			# Consola: datos del teclado
+		.eqv	TRANSMITTER_CTRL_ADDR,0xFFFF0008		# Consola: control de la pantalla
+		.eqv	TRANSMITTER_DATA_ADDR,0xFFFF000C		# Consola: datos de la pantalla
+		.eqv	D7SEG_RIGHT_ADDR,0xFFFF0010			# Display de 7 segmentos derecho
+		.eqv	D7SEG_LEFT_ADDR,0xFFFF0011			# Display de 7 segmentos izquierdo
+		.eqv	HEXKEY_CTRL_ADDR,0xFFFF0012			# Teclado hexadecimal: control
+		.eqv	COUNTER_ADDR,0xFFFF0013				# Contador
+		.eqv	HEXKEY_DATA_ADDR,0xFFFF0014			# Teclado hexadecimal: datos
+# C�digos de interrupci�n en el registro Cause
+		.eqv	INT_RECEIVER_CODE,0x00000100			# Interrupci�n del teclado: bit 8
+		.eqv	INT_TRANSMITTER_CODE,0x00000200			# Interrupci�n de la pantalla: bit 9
+		.eqv	INT_COUNTER_CODE,0x00000400			# Interrupci�n del contador: bit 10
+		.eqv	INT_HEXKEY_CODE,0x00000800			# Interrupci�n del teclado hexadecimal: bit 11
+# Datos para la interrupci�n del contador
+ints_counter:	.word	0
+COUNTER_MSG:	.asciiz	"Counter/timer interrupt "
+eoln:		.byte	'\n'
+
+
+###############################################################
+#
+# MANEJADOR DE EXCEPCIONES: C�DIGO
+#
+###############################################################		
+		.ktext	0x80000180
+RTE_ENTRY:
+# Salvar registros
+# No es necesario salvar $k0/$k1 porque est�n reservados para uso libre por el kernel
+   # El manejador no usa la pila para salvar registros, por tanto no es reentrante
+   # Salvar $at en $k0 (antes de utilizar pseudoinstrucciones)
+		move	$k0,$at
+   # Salvar copia de $at en memoria
+		sw	$k0,sv_at
+   # Cada rutina salva y restaura los registros adicionales que utilice
+# Identificar la causa de la excepci�n
+identify_cause:
+   # Copiar registro Cause ($13-coprocesador 0) en $k0
+		mfc0	$k0,$13
+   # Extraer el campo de c�digo de excepci�n (ExcCode)
+		andi	$k0,$k0,0x7c
+# Saltar a la rutina de tratamiento
+		la	$k1,EXV_TABLE
+		addu	$k1,$k1,$k0
+		lw	$k1,0($k1)
+jump_RTE:
+		jr	$k1
+# Punto de retorno en excepciones internas
+continue_exception:
+# En excepciones internas la instrucci�n v�ctima no se vuelve a ejecutar
+   # El EPC ($14-coprocesador 0) contiene la direcci�n de la instrucci�n v�ctima
+   # Copiar el EPC en $k0
+		mfc0	$k0,$14
+   # Sumar 4 para apuntar a la siguiente instrucci�n
+		addi	$k0,$k0,4
+   # Almacenar la nueva direcci�n en el EPC
+		mtc0	$k0,$14
+# Punto de retorno en excepciones por interrupci�n
+continue_interrupt:
+# Restaurar registros
+restore_regs:
+   # Restaurar $at
+		lw	$at,sv_at
+   # Borrar registro Cause ($13-coprocesador 0)
+   		mtc0	$zero,$13
+   # Activar interrupciones en registro Status ($12-coprocesador 0)
+		mfc0	$k0,$12
+		ori	$k0,$k0,1
+		mtc0	$k0,$12
+# Retornar del manejador de excepci�n
+return_exception:
+		eret
+
+
+###############################################################
+# RUTINA GEN�RICA DE TRATAMIENTO DE EXCEPCI�N
+# La rutina imprimir� el mensaje gen�rico por pantalla
+###############################################################
+GEN_RTE:
+   # Salvar registros
+		sw	$a0,sv_a0	# Salvar $a0
+		sw	$v0,sv_v0	# Salvar $v0
+   # Imprimir informaci�n sobre la excepci�n producida
+   	# Imprimir M1_MSG
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,M1_MSG
+		syscall
+	# Imprimir n�mero de excepci�n (ExcCode)
+		li	$v0,1		# syscall 1 (print_int)
+		srl	$a0,$k0,2       # El campo de c�digo de excepci�n (ExcCode) est� en $k0
+		syscall
+	# Imprimir mensaje indicando la excepci�n producida
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,MSG_TABLE
+		addu	$a0,$a0,$k0
+		lw	$a0,0($a0)
+		syscall
+   	# Imprimir M2_MSG
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,M2_MSG
+		syscall
+   # Restaurar registros
+		lw	$a0,sv_a0	# Restaurar $a0
+		lw	$v0,sv_v0	# Restaurar $v0
+   # Volver a la parte general del manejador para excepciones INTERNAS
+		j	continue_exception
+
+
+###############################################################
+# RUTINA DE TRATAMIENTO DE EXCEPCI�N POR TRAP
+###############################################################
+TRAP_RTE:
+   # Aqu� hay que chequear el registro $v0 para identificar el servicio solicitado
+   # y as� saltar a la rutina de servicio del mismo
+   		li	$k0,1
+   		li	$k1,2
+		beq	$v0,$k0,write_d7seg
+		beq	$v0,$k1,set_counter
+   # Si no se ha identificado ninguno de los servicios estipulados,
+   # se imprimir� el mensaje gen�rico por pantalla
+TRAP_GENERIC_RTE:
+   # Salvar registros
+		sw	$a0,sv_a0	# Salvar $a0
+		sw	$v0,sv_v0	# Salvar $v0
+   # Imprimir informaci�n sobre la excepci�n producida
+   	# Imprimir M1_MSG
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,M1_MSG
+		syscall
+	# Imprimir n�mero de excepci�n (TRAP_CODE)
+		li	$v0,1		# syscall 1 (print_int)
+		li	$a0,TRAP_CODE
+		syscall
+	# Imprimir mensaje indicando la excepci�n producida
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,TRAP_MSG
+		syscall
+   	# Imprimir M2_MSG
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,M2_MSG
+		syscall
+   # Restaurar registros
+		lw	$a0,sv_a0	# Restaurar $a0
+		lw	$v0,sv_v0	# Restaurar $v0
+   # Volver a la parte general del manejador para excepciones INTERNAS
+		j	continue_exception
+###############################################################
+# A PARTIR DE AQU� ESCRIBIREMOS LAS RUTINAS DE SERVICIO DE TRAP
+###############################################################
+write_d7seg:
+
+	# Compruebo si es el visualizador izq o el derecho
+		bne	$a1,$zero,vis_izq	
+vis_der:
+		la 	$k0, 0XFFFF0010
+		sb 	$a0, 0($k0)
+		j	continue_exception
+vis_izq:		
+		la 	$k0, 0XFFFF0011
+		sb 	$a0, 0($k0)
+		j	continue_exception
+#######################
+set_counter:
+	# Compruebo que en el argumento $a0, entra o un 1 o un 2	
+		seq	$k0,$a0,1
+		bne	$k0,$zero,set_counter_main	
+		seq	$k0,$a0,2
+		bne	$k0,$zero,set_counter_main
+		j	continue_exception	# En valor del argumento es distinto a 1 o 2 por lo que se sale la rutina sin modificar el registro de control del Contador
+set_counter_main:	
+	# Actualizo el Registro de Control del Contador, para habilitar o deshabilitar la funci�n	
+		la	$k0, 0xFFFF0013
+		sb	$a0, 0($k0)
+	# Finalizo la rutina volviendo al tratamiento	
+		j	continue_exception	
+###############################################################
+# RUTINA DE TRATAMIENTO DE INTERRUPCI�N
+###############################################################
+INT_RTE:
+   # Chequear el registro de Causa $13 para identificar la interrupci�n producida
+   # y as� saltar a la rutina correspondiente
+   		mfc0	$k0,$13
+   		andi	$k1,$k0,INT_COUNTER_CODE
+   		bne	$k1,$zero,INT_COUNTER_RTE		
+   # Si el c�digo de interrupci�n no est� identificado, 
+   # la rutina imprimir� el mensaje gen�rico por pantalla
+INT_GENERIC_RTE:
+   # Salvar registros
+		sw	$a0,sv_a0	# Salvar $a0
+		sw	$v0,sv_v0	# Salvar $v0
+   # Imprimir informaci�n sobre la excepci�n producida
+   	# Imprimir M1_MSG
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,M1_MSG
+		syscall
+	# Imprimir n�mero de excepci�n (INT_CODE)
+		li	$v0,1		# syscall 1 (print_int)
+		li	$a0,INT_CODE
+		syscall
+	# Imprimir mensaje indicando la excepci�n producida
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,INT_MSG
+		syscall
+   	# Imprimir M2_MSG
+		li	$v0,4		# syscall 4 (print_str)
+		la	$a0,M2_MSG
+		syscall
+   # Restaurar registros
+		lw	$a0,sv_a0	# Restaurar $a0
+		lw	$v0,sv_v0	# Restaurar $v0
+		move	$k0,$zero
+		move	$k1,$zero
+   # Volver a la parte general del manejador para excepciones EXTERNAS
+		j	continue_interrupt
+###############################################################
+# A PARTIR DE AQU� ESCRIBIREMOS LAS RUTINAS DE INTERRUPCI�N
+###############################################################
+INT_COUNTER_RTE:
+	# Guardo los registros
+			
+		sw	$v0,sv_v0
+		sw	$a0,sv_a0	
+	# Incrementar variable con n�mero de interrupciones del contador
+		la	$k0, ints_counter
+   		lw	$k1,0($k0)
+   		addi	$k1,$k1,1
+   		sw	$k1,0($k0)
+	# Imprimir mensaje
+		li	$v0,4		
+		la	$a0,COUNTER_MSG
+		syscall
+		li	$v0,1		
+		lw	$a0,ints_counter
+		syscall
+		li	$v0,11		# Escribir salto de l�nea
+		lbu	$a0,eoln
+		syscall
+	# Restaurar registros	
+		lw	$a0,sv_a0	# Restaurar $a0
+		lw	$v0,sv_v0	# Restaurar $v0
+	# Fin de la rutina	
+		j	continue_interrupt
+
