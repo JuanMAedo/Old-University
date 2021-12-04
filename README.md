@@ -1,6 +1,6 @@
 # Old-University
 Some programs of the first and second year <br />
-The code have a lot of mistakes and inefficient estructures.<br />
+The code,probably ,have a lot of mistakes and inefficient estructures.<br />
 
 ## Introduction to Programing ##
 **Studied in Pascal**<br />
