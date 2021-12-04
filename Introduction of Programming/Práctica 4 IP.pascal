@@ -1,16 +1,16 @@
 PROGRAM factura;
-{Prop髎ito: Crear un programa que calcule la factura de un alquiler de coches}
+{Prop贸sito: Crear un programa que calcule la factura de un alquiler de coches}
 CONST
-   PRECIO1=30;{Precio para todos los recorridos inferiores a 500 kil髆etros }
-   PRECIO2=0.3;{Precio para recorridos que superen los 500 kil髆etros y no superen los 1000 kil髆etros}
-   PRECIO3=0.1;{Precio para los recorridos que superen los 1000 kil髆etros}
+   PRECIO1=30;{Precio para todos los recorridos inferiores a 500 kil贸metros }
+   PRECIO2=0.3;{Precio para recorridos que superen los 500 kil贸metros y no superen los 1000 kil贸metros}
+   PRECIO3=0.1;{Precio para los recorridos que superen los 1000 kil贸metros}
    KMBASE=0;
    DISTANCIA1=500;
    DISTANCIA2=1000;
 
 VAR
-   diaSemana:char;{Dato que recoge el d韆 de la semana que el cliente realizar el viaje}
-   kmRecorridos:integer;{Dato que recoge el n鷐ero de los kil髆etros que se han recorrido}
+   diaSemana:char;{Dato que recoge el d铆a de la semana que el cliente realizar el viaje}
+   kmRecorridos:integer;{Dato que recoge el n煤mero de los kil贸metros que se han recorrido}
    precioAlquiler:real;
    kmPrecio2:integer;
    kmPrecio3:integer;
