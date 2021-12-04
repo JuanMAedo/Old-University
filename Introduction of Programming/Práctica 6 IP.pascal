@@ -26,7 +26,7 @@ BEGIN
 		writeln('Elija una opcion: ');
 		readln(opcionElegida);
 		CASE opcionElegida OF
-				'A','a':BEGIN{Inicio de la instrucci髇 de multiplos sinceros}
+				'A','a':BEGIN{Inicio de la instrucci贸n de multiplos sinceros}
 							writeln('************ Multiplos Sinceros **************');
 							REPEAT
 								writeln('Introduzca el numero de una cifra: ');
@@ -50,8 +50,8 @@ BEGIN
 									write(i,' ');
 							END;
 							writeln;
-						END;{Final de la instrucci髇 de multiplos sinceros}
-				'B','b':BEGIN{Inicio de la instrucci髇 de numeros amigos}
+						END;{Final de la instrucci贸n de multiplos sinceros}
+				'B','b':BEGIN{Inicio de la instrucci贸n de numeros amigos}
 							writeln('************ Numeros Amigos **************');
 							REPEAT
 								writeln('Introduzca un numero positivo: ');
@@ -79,8 +79,8 @@ BEGIN
 								writeln('Los numeros son amigos')
 							ELSE
 								writeln('Los numeros no son amigos');
-						END;{Final de la instrucci髇 de numeros amigos}
-				'C','c':BEGIN{Inicio de la instrucci髇 de numeros colegas}
+						END;{Final de la instrucci贸n de numeros amigos}
+				'C','c':BEGIN{Inicio de la instrucci贸n de numeros colegas}
 							writeln('************ Numeros Colegas **************');
 							REPEAT
 								writeln('Introduzca un positivo: ');
@@ -99,8 +99,8 @@ BEGIN
 								writeln('Son numeros colegas')
 							ELSE
 								writeln('No son numeros amigos');
-						END;{Final de la instrucci髇 de numeros colegas}
-				'D','d':BEGIN {Inicio de la instrucci髇 de numero totalpar}
+						END;{Final de la instrucci贸n de numeros colegas}
+				'D','d':BEGIN {Inicio de la instrucci贸n de numero totalpar}
 							writeln('************ Numero Totalpar  **************');
 							REPEAT
 								writeln('Introduzca un numero positivo: ');
@@ -117,8 +117,8 @@ BEGIN
 								writeln('El numero es totalpar')
 							ELSE
 								writeln('El numero no es totalpar');
-						END;{Final de la instrucci髇 de numero totalpar}
-				'E','e':BEGIN{Inicio de la instrucci髇 de la piramide}
+						END;{Final de la instrucci贸n de numero totalpar}
+				'E','e':BEGIN{Inicio de la instrucci贸n de la piramide}
 							writeln('************ Numero Totalpar  **************');
 							REPEAT
 								writeln('Introduzca un numero positivo: ');
@@ -133,7 +133,7 @@ BEGIN
 									UNTIL(i=vecesPiramide);
 									writeln;
 								END;
-						END;{Final de la instrucci髇 de la piramide}
+						END;{Final de la instrucci贸n de la piramide}
 				'F','f': writeln('Fin de programa.');
 			END;{CASE}
 	UNTIL(opcionElegida='F') OR (opcionElegida='f');
