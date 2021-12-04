@@ -1,1 +1,1 @@
-# All exercises I did during the semester
+All exercises I did during the semester
