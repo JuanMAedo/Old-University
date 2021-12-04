@@ -13,16 +13,16 @@ END; {mostrarAutor}
 
 PROCEDURE mostrarMenu;
 BEGIN {mostrarMenu}
-   writeln('1. Imprimir los n primeros números naturales  ');
-   writeln('2. Imprimir los n números naturales siguientes a un número');
+   writeln('1. Imprimir los n primeros nÃºmeros naturales  ');
+   writeln('2. Imprimir los n nÃºmeros naturales siguientes a un nÃºmero');
    writeln('3. Imprimir los n primeros naturales en cascada');
-   writeln('4. Hallar la suma de los números naturales entre dos número');
-   writeln('5. Hallar el número de múltiplos de un número que hay en los n primeros naturales ');
+   writeln('4. Hallar la suma de los nÃºmeros naturales entre dos nÃºmero');
+   writeln('5. Hallar el nÃºmero de mÃºltiplos de un nÃºmero que hay en los n primeros naturales ');
    writeln('S. Salir');
 END; {mostrarMenu}
 
 FUNCTION pedirNumeroPositivo:integer;
-{Solicita al usuario un número positivo}
+{Solicita al usuario un nÃºmero positivo}
 VAR
    num:integer;
 BEGIN {pedirNumPositivo}
@@ -96,41 +96,41 @@ BEGIN{Programa Principal}
 		CASE opcion OF
 			'1': BEGIN
 					writeln('Ejecutando la opcion 1');
-					writeln('¿Cuantos numeros quiere mostrar?');
+					writeln('Â¿Cuantos numeros quiere mostrar?');
 					numero1:= pedirNumeroPositivo;
 					nPrimerosNumNaturales(numero1);
 				 END;
 			'2': BEGIN
 				 	writeln('Ejecutando la opcion 2');
-					writeln('¿Cuantos numeros quiere mostrar?');
+					writeln('Â¿Cuantos numeros quiere mostrar?');
 					numero1:= pedirNumeroPositivo;
-					writeln('¿A partir de que numero?');
+					writeln('Â¿A partir de que numero?');
 					numero2:= pedirNumeroPositivo;
 					SucesionNPrimerosNumNaturales(numero1,numero2);
 				 END;
 			'3': BEGIN
 				 	writeln('Ejecutando la opcion 3');
-					writeln('¿Cuantos numeros quiere mostrar?');
+					writeln('Â¿Cuantos numeros quiere mostrar?');
 					numero1:= pedirNumeroPositivo;
 					cascadaNumeros(numero1);
 
 				 END;
 			'4': BEGIN
 					writeln('Ejecutando la opcion 4');
-					writeln('¿Cual es el primer numero?');
+					writeln('Â¿Cual es el primer numero?');
 					numero1:= pedirNumeroPositivo;
 					REPEAT
-						writeln('¿Cual es el segundo numero?');
+						writeln('Â¿Cual es el segundo numero?');
 						numero2:= pedirNumeroPositivo;
 					UNTIL(numero1<numero2) OR (numero1=numero2);
 					writeln('La suma es: ',sumatorioNumeros(numero1,numero2));
 				 END;
 			'5': BEGIN
 				 	writeln('Ejecutando la opcion 5');
-				 	writeln('¿Cual es el ultimo numero?');
+				 	writeln('Â¿Cual es el ultimo numero?');
 				 	numero1:= pedirNumeroPositivo;
 				 	REPEAT
-				 		writeln('¿Cual es el numero base?');
+				 		writeln('Â¿Cual es el numero base?');
 						numero2:= pedirNumeroPositivo;
 				 	UNTIL (numero2<10);
 				 	writeln('Existen ',numeroMultiplosEnN(numero1,numero2),' multiplos de ',numero2);
