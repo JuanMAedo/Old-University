@@ -27,7 +27,7 @@ BEGIN {mostrarAutor}
 END; {mostrarAutor}
 PROCEDURE mostrarMenu;
 BEGIN {mostrarMenu}
-   writeln('¿Que desea hacer?');
+   writeln('Â¿Que desea hacer?');
    writeln('a. Introducir notas  ');
    writeln('b. Mostrar notas');
    writeln('c. Calcular la media');
@@ -183,13 +183,13 @@ BEGIN{Programa Principal}
 			'g','G':	write('El numero de alumnos que han superado la nota media es de: ', notaEncimaMedia(notas,calcularMedia(notas)));
 			'h','H':	write('El alumno con la mejor nota tiene la matricula numero ', posicionElemento(notas) ,' ,que ha obtenido un : ', notaMaxima(notas):0:2);
 			'i','I':BEGIN
-						write('¿Cual es el numero de matricula a la cual desea cambiar la nota?: ');
+						write('Â¿Cual es el numero de matricula a la cual desea cambiar la nota?: ');
 						readln(numMatricula);
 						write('Introduzca la nueva nota del alumno', numMatricula,' :');
 						cambiarNotas(notas,numMatricula);
 				    END;
 			'j','J':	notaEscrita(notas);
-			'k','K':	write('Finalizado.¡Hasta la proxima!');
+			'k','K':	write('Finalizado.Â¡Hasta la proxima!');
 		ELSE
 			writeln('Opcion no valida. Vuelva a elegir  una opcion valida');
 		END;{CASE}
