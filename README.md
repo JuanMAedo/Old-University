@@ -23,9 +23,12 @@ The code have a lot of mistakes and inefficient estructures.<br />
 >· Use of Data Structures and Files<br />
 
 ## Computer Structure and Organization ##
-**Studied in MIPS32 over Mars's tool** 
+**Studied in MIPS32 over Mars's tool**
+** Mixed of 2 subjects: Computer Structure and Computer Organization and Architecture **
 >· Learn all over IEEE754 standar<br />
 >· Using of Processor registers<br />
 >· Using of subrutines <br />
 >· Optimization<br />
 >· Segmentation<br />
+>· Exceptions Handling<br />
+>· Some user of MotorolaC6800<br />
