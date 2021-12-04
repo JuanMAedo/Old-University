@@ -2,7 +2,7 @@
 Some programs of the first and second year 
 The code have a lot of mistakes and inefficient estructures.
 
-# Introdution to Programing #
+# Introduction to Programing #
 Studied in Pascal
 · Introduction of loops
 · Type of data 
