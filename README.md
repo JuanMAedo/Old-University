@@ -1,6 +1,5 @@
 # Old-University
-Some programs of the first and second year <br />
-The code,probably ,have a lot of mistakes and inefficient estructures.<br />
+Collection of codes of the different subjects explained below <br />
 
 ## Introduction to Programing ##
 **Studied in Pascal**<br />
@@ -32,3 +31,9 @@ The code,probably ,have a lot of mistakes and inefficient estructures.<br />
 >· Segmentation<br />
 >· Exceptions Handling<br />
 >· Some user of MotorolaC6800<br />
+
+## Algorithm design and analysis ##
+>· Recursion<br />
+>· Divide and Conquer<br />
+>· Backtracking<br />
+>· Greedy algorithm <br />
